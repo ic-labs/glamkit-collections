@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.template.defaultfilters import filesizeformat
 from django_object_actions import DjangoObjectActions
 from glamkit_collections.contrib.work_creator.admin_utils import \
-    WorkThumbnailMixin, admin_url, admin_link
+    WorkThumbnailMixin, admin_url, admin_link, get_thumbnail_options
 
 
 class WorkImageInline(admin.TabularInline, WorkThumbnailMixin):
@@ -11,7 +11,7 @@ class WorkImageInline(admin.TabularInline, WorkThumbnailMixin):
     model = ArtworkImage
     """
 
-    thumbnail_options = {'size': (160, 120)}
+    thumbnail_options = get_thumbnail_options()
     thumbnail_field = 'downloaded_image'
 
     fields = (
@@ -63,7 +63,7 @@ class WorkImageAdmin(DjangoObjectActions, admin.ModelAdmin,
     )
 
     thumbnail_field = 'downloaded_image'
-    thumbnail_options = {'size': (250, 250)}
+    thumbnail_options = get_thumbnail_options()
 
     search_fields = (
         'netx_id',
