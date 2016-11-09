@@ -35,6 +35,12 @@ class WorkCreatorsInlineForCreators(admin.TabularInline, ThumbnailAdminMixin):
             return admin_link(inst.work)
     link.allow_tags = True
 
+    def get_queryset(self, request):
+        return super(WorkCreatorsInlineForCreators, self) \
+            .get_queryset(request) \
+            .filter(work__publishing_is_draft=True,
+                    creator__publishing_is_draft=True)
+
 
 class WorkCreatorsInlineForWorks(SortableInlineAdminMixin, WorkCreatorsInlineForCreators):
     exclude = None
@@ -52,8 +58,20 @@ class WorkCreatorsInlineForWorks(SortableInlineAdminMixin, WorkCreatorsInlineFor
             return admin_link(inst.creator)
     link.allow_tags = True
 
+    def get_queryset(self, request):
+        return super(WorkCreatorsInlineForWorks, self) \
+            .get_queryset(request) \
+            .filter(work__publishing_is_draft=True,
+                    creator__publishing_is_draft=True)
 
-class WorkImageInline(SortableInlineAdminMixin, admin.TabularInline, ThumbnailAdminMixin):
+
+class WorkImageInline(
+    # Some super-weirdness means that this inline doesn't appear on
+    # docker-cloud staging if SortableInlineAdminMixin is enabled.
+    # Giving up for now. TODO: reinstate, or choose a different sorting ui lib
+    # SortableInlineAdminMixin,
+    admin.TabularInline, ThumbnailAdminMixin
+):
     model = models.WorkImage
     raw_id_fields = ('image', 'work')
     extra = 1
