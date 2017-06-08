@@ -1,3 +1,5 @@
+# OBSOLETE - this repository is now included in https://github.com/ic-labs/django-icekit/
+
 [![Requirements Status](https://img.shields.io/requires/github/ic-labs/glamkit-collections.svg)](https://requires.io/github/ic-labs/glamkit-collections/requirements/)
 
 # Overview
